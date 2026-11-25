@@ -4,6 +4,8 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 
+import csv
+
 cities = {
     "New York": (40.7128, -74.0060),
     "Chicago": (41.8781, -87.6298),
@@ -25,9 +27,9 @@ for city, coordinates in cities.items():
 
     driver.get(url)
 
-    print(f"\n{'=' * 40}")
-    print(city)
-    print(f"{'=' * 40}")
+    # print(f"\n{'=' * 40}")
+    # print(city)
+    # print(f"{'=' * 40}")
 
     forecast_periods = driver.find_elements(By.CSS_SELECTOR, "#detailed-forecast-body .row-forecast")
 
@@ -43,7 +45,13 @@ for city, coordinates in cities.items():
         # print()
 
     #print(driver.title)
-    
+
 driver.quit()
 
-print(weather_data)
+#print(weather_data)
+
+with open("weather_data.csv", "w", newline="") as csv_file:
+    fieldnames = ["city", "forecast_period", "forecast_description"]
+    writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+    writer.writeheader()
+    writer.writerows(weather_data)
