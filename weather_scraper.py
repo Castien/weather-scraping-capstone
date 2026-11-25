@@ -11,6 +11,8 @@ cities = {
     "Los Angeles": (34.0522, -118.2437)
 }
 
+weather_data = []
+
 driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 
 # tested with one city
@@ -33,10 +35,15 @@ for city, coordinates in cities.items():
         forecast_name = period.find_element(By.CSS_SELECTOR, ".forecast-label").text
         forecast_description = period.find_element(By.CSS_SELECTOR, ".forecast-text").text
 
-        print(forecast_name)
-        print(forecast_description)
-        print()
+        weather_record = {"city": city, "forecast_period": forecast_name, "forecast_description": forecast_description}
+        weather_data.append(weather_record)
 
-    print(driver.title)
+        # print(forecast_name)
+        # print(forecast_description)
+        # print()
 
+    #print(driver.title)
+    
 driver.quit()
+
+print(weather_data)
