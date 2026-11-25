@@ -59,6 +59,8 @@ with open("weather_data.csv", "w", newline="") as csv_file:
 
 weather_df = pd.read_csv("weather_data.csv")
 
+weather_df["city"] = weather_df["city"].str.strip()
+
 weather_df["time_zone"] = weather_df["city"].map({"New York": "Eastern", "Chicago": "Central", "Denver": "Mountain", "Los Angeles": "Pacific"})
 
 print(weather_df.head())
@@ -69,7 +71,5 @@ print(weather_df.isnull().sum())
 
 print("\nDuplicate rows:")
 print(weather_df.duplicated().sum())
-
-weather_df["city"] = weather_df["city"].str.strip()
 
 weather_df.to_csv("weather_data_cleaned.csv", index=False)
